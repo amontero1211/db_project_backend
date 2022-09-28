@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Artist(models.Model):
     name = models.CharField(max_length=20)
-    image = models.ImageField()
+    image = models.CharField(max_length=200)
     birth_date = models.DateField(auto_now=False, auto_now_add=False)
     nationality = models.CharField(max_length=12)
     commission = models.DecimalField(max_digits=4, decimal_places=2)
@@ -23,7 +23,7 @@ class ArtWork(models.Model):
     name = models.CharField(max_length=20, null=True)
     genre = models.CharField(max_length=15, null=True)
     create_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
-    image = models.ImageField(null=True)
+    image = models.CharField(max_length=200, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     state = models.CharField(max_length=10, choices=STATES, default='available')
     
@@ -46,8 +46,3 @@ class Purchaser(User):
     answer_1 = models.CharField(max_length=30, null=True)
     answer_2 = models.CharField(max_length=30, null=True)
     answer_3 = models.CharField(max_length=30, null=True)
-
-
-
-
-
