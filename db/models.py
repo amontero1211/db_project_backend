@@ -1,3 +1,7 @@
+from contextlib import AbstractAsyncContextManager
+import email
+from pyexpat import model
+from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -28,21 +32,24 @@ class ArtWork(models.Model):
     state = models.CharField(max_length=10, choices=STATES, default='available')
     
 
-class Invoice(models.Model):
-    artWork_id = models.OneToOneField(ArtWork, on_delete=models.CASCADE, parent_link=False)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    address = models.TextField()
-    price_total = models.DecimalField(max_digits=10, decimal_places=2)
-
-
-class Purchaser(User):
+class Purchaser(models.Model):
+    name = models.CharField(max_length=20)
+    username = models.CharField(max_length=30)
+    password = models.CharField(max_length=16)
     card_number = models.CharField(max_length=16)
     card_back_number = models.CharField(max_length=3)
-    card_expiration_date = models.DateField(auto_now=False, auto_now_add=False)
-    purchase_key = models.CharField(max_length=6, null=True)
+    # card_expiration_date = models.DateField(auto_now=False, auto_now_add=False)
+    # purchase_key = models.CharField(max_length=6, null=True)
     question_1 = models.CharField(max_length=30, null=True)
     question_2 = models.CharField(max_length=30, null=True)
     question_3 = models.CharField(max_length=30, null=True)
     answer_1 = models.CharField(max_length=30, null=True)
     answer_2 = models.CharField(max_length=30, null=True)
     answer_3 = models.CharField(max_length=30, null=True)
+
+
+class Invoice(models.Model):
+    artWork_id = models.OneToOneField(ArtWork, on_delete=models.CASCADE, parent_link=False)
+    purchaser_id = models.ForeignKey(Purchaser, on_delete=models.CASCADE, null=True)
+    address = models.TextField()
+    price_total = models.DecimalField(max_digits=10, decimal_places=2)

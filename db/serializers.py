@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from database.models import ArtWork, Artist, Purchaser 
+from .models import ArtWork, Artist, Invoice, Purchaser 
 
 
 class ArtWorkSerializer(serializers.ModelSerializer):
@@ -11,6 +11,11 @@ class ArtWorkSerializer(serializers.ModelSerializer):
 class ArtistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artist
+        fields = '__all__'
+
+class InvoiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Invoice
         fields = '__all__'
 
 
